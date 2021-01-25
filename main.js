@@ -12,14 +12,28 @@ const appY = Vue.createApp({
             details: ['50% cotton', '10% luck', '20% skill', '15% concentrated power of will', '5% pleasure'],
             variants: [{
                     id: 0001,
-                    color: 'blue'
+                    color: 'blue',
+                    image: './assets/images/socks_blue.jpg'
                 },
                 {
                     id: 0002,
-                    color: 'green'
+                    color: 'green',
+                    image: './assets/images/socks_green.jpg'
                 }
             ],
-            sizes: ['S', 'M', 'L']
+            sizes: ['S', 'M', 'L'],
+            cart: 0
+        }
+    },
+    methods: {
+        addToCart() {
+            this.cart += 1
+        },
+        removeFromCart() {
+            this.cart -= 1
+        },
+        updateImage(variantImage) {
+            this.image = variantImage
         }
     }
 })
