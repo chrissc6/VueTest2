@@ -6,6 +6,7 @@
     <title>Vue Mastery</title>
     <!-- Import Styles -->
     <link rel="stylesheet" href="./assets/styles.css" />
+    <link rel="stylesheet" href="./style.css" />
     <!-- Import Vue.js -->
     <script src="https://unpkg.com/vue@next"></script>
 </head>
@@ -20,7 +21,7 @@
                         <!-- v-bind directive -->
                         <!-- Dynamically bind an attribute (src) to an expression (image) -->
                         <!-- (v-bind:src) can be shorten to (:src) -->
-                        <img v-bind:src="image" alt="">
+                        <img :class="[inStock ? '' : 'out-of-stock-img']" v-bind:src="image" alt="">
                     </div>
                     <div class="product-info">
                         <!-- JS Expression -->
@@ -32,9 +33,12 @@
                         <p>{{ description }}</p>
                         <a :href="urlInfo">More Info</a>
                         <p v-if="inventory > 10">In Stock</p>
-                        <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+                        <p v-else-if="inventory <= 10 && inventory > 0" class="lowInventory">Almost sold out!</p>
                         <p v-else>Out of Stock</p>
                         <p v-show="sale">On SALE!</p>
+                        <!-- added class binding to span-->
+                        <!-- you can add ternary operator like this (:class="[inStock ? '' : 'out-of-stock-img']")-->
+                        <p>Inventory: <span :class="{lowInventory: lowInventoryLevel}">{{ inventory }}</span></p>
                         <label>Material:</label>
                         <ul>
                             <li v-for="d in details">{{ d }}</li>
@@ -46,11 +50,12 @@
                         <!-- key attribute gives each DOM element a unique key-->
                         <!-- mouseover is OnHover-->
                         <label>Color:</label>
-                        <div v-for="v in variants" :key="v.id" @mouseover="updateImage(v.image)">{{ v.color }}</div>
+                        <div v-for="v in variants" :key="v.id" @mouseover="updateImage(v.image)" class="color-circle" :style="{ backgroundColor: v.color }"></div>
                         <!-- v-on directive (:click) event were listening for -->
                         <!-- (v-on:) shorthand (@) -->
-                        <button class="button" v-on:click='addToCart'>Add to Cart</button>
-                        <button class="button" v-on:click='removeFromCart'>Remove to Cart</button>
+                        <button class="button" v-on:click='addToCart' :disabled="!inStock" :class="{ disabledButton: !inStock} ">Add to Cart</button>
+                        <button class="button" v-on:click='removeFromCart' :disabled="cart <= 0" :class="{ disabledButton: cart <= 0} ">Remove from
+                            Cart</button>
                     </div>
                 </div>
             </div>
