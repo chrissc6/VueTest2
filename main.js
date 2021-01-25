@@ -6,7 +6,9 @@ const appY = Vue.createApp({
             starRating: '5',
             starCustomers: '3',
             image: './assets/images/socks_blue.jpg',
-            urlInfo: 'https://en.wikipedia.org/wiki/Sock'
+            urlInfo: 'https://en.wikipedia.org/wiki/Sock',
+            inventory: 11,
+            sale: false
         }
     }
 })
