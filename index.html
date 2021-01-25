@@ -34,6 +34,15 @@
                         <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
                         <p v-else>Out of Stock</p>
                         <p v-show="sale">On SALE!</p>
+                        <ul>
+                            <li v-for="d in details">{{ d }}</li>
+                        </ul>
+                        <!-- key attribute gives each DOM element a unique key-->
+                        <div v-for="v in variants" :key="v.id">{{ v.color }}</div>
+                        <p>Sizes:</p>
+                        <ul>
+                            <li v-for="s in sizes">{{ s }}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
