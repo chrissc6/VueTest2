@@ -24,8 +24,9 @@
                         <img :class="[inStock ? '' : 'out-of-stock-img']" v-bind:src="image" alt="">
                     </div>
                     <div class="product-info">
-                        <!-- JS Expression -->
-                        <h1>{{ product }}</h1>
+                        <!-- same as JS Expression ({{ brand + ' ' + product }}) -->
+                        <!-- Computed property -->
+                        <h1>{{ title }}</h1>
                         <p v-if="starCustomers > 1">{{ product }} has a {{ starRating }} star rating from {{ starCustomers }} customers.
                         </p>
                         <p v-else>{{ product }} has a {{ starRating }} star rating from {{ starCustomers }} at least one customer.
@@ -35,7 +36,7 @@
                         <p v-if="inventory > 10">In Stock</p>
                         <p v-else-if="inventory <= 10 && inventory > 0" class="lowInventory">Almost sold out!</p>
                         <p v-else>Out of Stock</p>
-                        <p v-show="sale">On SALE!</p>
+                        <p v-show="onSale">On SALE!</p>
                         <!-- added class binding to span-->
                         <!-- you can add ternary operator like this (:class="[inStock ? '' : 'out-of-stock-img']")-->
                         <p>Inventory: <span :class="{lowInventory: lowInventoryLevel}">{{ inventory }}</span></p>
@@ -50,11 +51,11 @@
                         <!-- key attribute gives each DOM element a unique key-->
                         <!-- mouseover is OnHover-->
                         <label>Color:</label>
-                        <div v-for="v in variants" :key="v.id" @mouseover="updateImage(v.image)" class="color-circle" :style="{ backgroundColor: v.color }"></div>
+                        <div v-for="(v, id) in variants" :key="v.id" @mouseover="updateSelectedVariant(id)" class="color-circle" :style="{ backgroundColor: v.color }"></div>
                         <!-- v-on directive (:click) event were listening for -->
                         <!-- (v-on:) shorthand (@) -->
                         <button class="button" v-on:click='addToCart' :disabled="!inStock" :class="{ disabledButton: !inStock} ">Add to Cart</button>
-                        <button class="button" v-on:click='removeFromCart' :disabled="cart <= 0" :class="{ disabledButton: cart <= 0} ">Remove from
+                        <button class="button" v-on:click='removeFromCart' :disabled="currentItemSale <= 0" :class="{ disabledButton: currentItemSale <= 0} ">Remove from
                             Cart</button>
                     </div>
                 </div>

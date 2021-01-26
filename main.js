@@ -5,56 +5,71 @@ const appY = Vue.createApp({
             description: 'Worlds most comfortable socks!',
             starRating: '5',
             starCustomers: '3',
-            image: './assets/images/socks_blue.jpg',
+            selectedVariant: 0001,
             urlInfo: 'https://en.wikipedia.org/wiki/Sock',
-            inventory: 11,
-            inStock: true,
-            lowInventoryLevel: false,
-            sale: false,
+            onSale: false,
             details: ['50% cotton', '10% luck', '20% skill', '15% concentrated power of will', '5% pleasure'],
             variants: [{
                     id: 0001,
                     color: 'blue',
-                    image: './assets/images/socks_blue.jpg'
+                    image: './assets/images/socks_blue.jpg',
+                    quantity: 11,
+                    currentSale: 0
                 },
                 {
                     id: 0002,
                     color: 'green',
-                    image: './assets/images/socks_green.jpg'
+                    image: './assets/images/socks_green.jpg',
+                    quantity: 1,
+                    currentSale: 0
                 }
             ],
             sizes: ['S', 'M', 'L'],
             cart: 0,
+            brand: 'Chrissc6'
         }
     },
     methods: {
-        updateInventory() {
-            if (this.inventory == 0) {
-                this.inStock = false
-            } else {
-                this.inStock = true
-            }
-            this.lowInventoryLevel = this.lowInventoryCheck()
+        addToCart() {
+            this.cart += 1
+            this.variants[this.selectedVariant].quantity -= 1
+            this.variants[this.selectedVariant].currentSale += 1
         },
-        lowInventoryCheck() {
+        removeFromCart() {
+            this.cart -= 1
+            this.variants[this.selectedVariant].quantity += 1
+            this.variants[this.selectedVariant].currentSale -= 1
+        },
+        updateSelectedVariant(variantId) {
+            this.selectedVariant = variantId
+        }
+    },
+    computed: {
+        title() {
+            if (this.onSale) {
+                return this.brand + ' ' + this.product + ' is on sale!'
+            } else {
+                return this.brand + ' ' + this.product
+            }
+        },
+        image() {
+            return this.variants[this.selectedVariant].image
+        },
+        inStock() {
+            return this.variants[this.selectedVariant].quantity
+        },
+        inventory() {
+            return this.variants[this.selectedVariant].quantity
+        },
+        currentItemSale() {
+            return this.variants[this.selectedVariant].currentSale
+        },
+        lowInventoryLevel() {
             if (this.inventory <= 10 && this.inventory > 0) {
                 return true
             } else {
                 return false
             }
-        },
-        addToCart() {
-            this.cart += 1
-            this.inventory -= 1
-            this.updateInventory()
-        },
-        removeFromCart() {
-            this.cart -= 1
-            this.inventory += 1
-            this.updateInventory()
-        },
-        updateImage(variantImage) {
-            this.image = variantImage
         }
     }
 })
