@@ -18,3 +18,17 @@
 .lowInventory {
     color: red;
 }
+
+.blink {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.itemSale {
+    font-weight: 300;
+}

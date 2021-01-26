@@ -26,20 +26,22 @@
                     <div class="product-info">
                         <!-- same as JS Expression ({{ brand + ' ' + product }}) -->
                         <!-- Computed property -->
-                        <h1>{{ title }}</h1>
+                        <h1 :class="{itemSale: onSale}">{{ title }}</h1>
                         <p v-if="starCustomers > 1">{{ product }} has a {{ starRating }} star rating from {{ starCustomers }} customers.
                         </p>
                         <p v-else>{{ product }} has a {{ starRating }} star rating from {{ starCustomers }} at least one customer.
                         </p>
                         <p>{{ description }}</p>
                         <a :href="urlInfo">More Info</a>
-                        <p v-if="inventory > 10">In Stock</p>
-                        <p v-else-if="inventory <= 10 && inventory > 0" class="lowInventory">Almost sold out!</p>
-                        <p v-else>Out of Stock</p>
+                        <p :class="[inventory <= 10 && inventory > 0 ? 'lowInventory' : '']">{{ stockText }}</p>
                         <p v-show="onSale">On SALE!</p>
                         <!-- added class binding to span-->
                         <!-- you can add ternary operator like this (:class="[inStock ? '' : 'out-of-stock-img']")-->
-                        <p>Inventory: <span :class="{lowInventory: lowInventoryLevel}">{{ inventory }}</span></p>
+                        <p>Inventory:
+                            <span v-if="lastItem" class="blink lowInventory">{{ inventory }}</span>
+                            <span v-else-if="lowInventoryLevel" class="lowInventory">{{ inventory }}</span>
+                            <span v-else>{{ inventory }}</span>
+                        </p>
                         <label>Material:</label>
                         <ul>
                             <li v-for="d in details">{{ d }}</li>

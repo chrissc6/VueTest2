@@ -2,7 +2,7 @@ const appY = Vue.createApp({
     data: function() {
         return {
             product: 'Super Socks',
-            description: 'Worlds most comfortable socks!',
+            description: 'World' + "'" + 's most comfortable socks!',
             starRating: '5',
             starCustomers: '3',
             selectedVariant: 0001,
@@ -20,7 +20,7 @@ const appY = Vue.createApp({
                     id: 0002,
                     color: 'green',
                     image: './assets/images/socks_green.jpg',
-                    quantity: 1,
+                    quantity: 2,
                     currentSale: 0
                 }
             ],
@@ -61,6 +61,13 @@ const appY = Vue.createApp({
         inventory() {
             return this.variants[this.selectedVariant].quantity
         },
+        lastItem() {
+            if (this.variants[this.selectedVariant].quantity == 1) {
+                return true
+            } else {
+                false
+            }
+        },
         currentItemSale() {
             return this.variants[this.selectedVariant].currentSale
         },
@@ -69,6 +76,15 @@ const appY = Vue.createApp({
                 return true
             } else {
                 return false
+            }
+        },
+        stockText() {
+            if (this.inventory > 10) {
+                return 'In Stock'
+            } else if (this.inventory <= 10 && this.inventory > 0) {
+                return 'Almost sold out!'
+            } else {
+                return 'Out of Stock'
             }
         }
     }
