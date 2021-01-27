@@ -13,60 +13,17 @@
 
 <body>
     <div id="appX">
-        <div class="nav-bar">
-            <div class="cart">Cart({{ cart }})</div>
-            <div class="product-display">
-                <div class="product-container">
-                    <div class="product-image">
-                        <!-- v-bind directive -->
-                        <!-- Dynamically bind an attribute (src) to an expression (image) -->
-                        <!-- (v-bind:src) can be shorten to (:src) -->
-                        <img :class="[inStock ? '' : 'out-of-stock-img']" v-bind:src="image" alt="">
-                    </div>
-                    <div class="product-info">
-                        <!-- same as JS Expression ({{ brand + ' ' + product }}) -->
-                        <!-- Computed property -->
-                        <h1 :class="{itemSale: onSale}">{{ title }}</h1>
-                        <p v-if="starCustomers > 1">{{ product }} has a {{ starRating }} star rating from {{ starCustomers }} customers.
-                        </p>
-                        <p v-else>{{ product }} has a {{ starRating }} star rating from {{ starCustomers }} at least one customer.
-                        </p>
-                        <p>{{ description }}</p>
-                        <a :href="urlInfo">More Info</a>
-                        <p :class="[inventory <= 10 && inventory > 0 ? 'lowInventory' : '']">{{ stockText }}</p>
-                        <p v-show="onSale">On SALE!</p>
-                        <!-- added class binding to span-->
-                        <!-- you can add ternary operator like this (:class="[inStock ? '' : 'out-of-stock-img']")-->
-                        <p>Inventory:
-                            <span v-if="lastItem" class="blink lowInventory">{{ inventory }}</span>
-                            <span v-else-if="lowInventoryLevel" class="lowInventory">{{ inventory }}</span>
-                            <span v-else>{{ inventory }}</span>
-                        </p>
-                        <label>Material:</label>
-                        <ul>
-                            <li v-for="d in details">{{ d }}</li>
-                        </ul>
-                        <label>Sizes:</label>
-                        <ul>
-                            <li v-for="s in sizes">{{ s }}</li>
-                        </ul>
-                        <!-- key attribute gives each DOM element a unique key-->
-                        <!-- mouseover is OnHover-->
-                        <label>Color:</label>
-                        <div v-for="(v, id) in variants" :key="v.id" @mouseover="updateSelectedVariant(id)" class="color-circle" :style="{ backgroundColor: v.color }"></div>
-                        <!-- v-on directive (:click) event were listening for -->
-                        <!-- (v-on:) shorthand (@) -->
-                        <button class="button" v-on:click='addToCart' :disabled="!inStock" :class="{ disabledButton: !inStock} ">Add to Cart</button>
-                        <button class="button" v-on:click='removeFromCart' :disabled="currentItemSale <= 0" :class="{ disabledButton: currentItemSale <= 0} ">Remove from
-                            Cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="nav-bar"></div>
+        <div class="cart">Cart({{ cart }})</div>
+        <product-display :premium="premium"></product-display>
     </div>
 
     <!-- Import Js with App (appY)-->
     <script src="./main.js"></script>
+
+    <!-- Import Component-->
+    <script src="./components/ProductDisplay.js"></script>
+    <script src="./components/ProductDetails.js"></script>
 
     <!--Mount App (appY)-->
     <script>
