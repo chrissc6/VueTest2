@@ -91,12 +91,12 @@ appY.component('product-display', {
 
     methods: {
         addToCart() {
-            this.cart += 1
+            this.$emit('a-to-cart', this.variants[this.selectedVariant].id)
             this.variants[this.selectedVariant].quantity -= 1
             this.variants[this.selectedVariant].currentSale += 1
         },
         removeFromCart() {
-            this.cart -= 1
+            this.$emit('r-to-cart', this.variants[this.selectedVariant].id)
             this.variants[this.selectedVariant].quantity += 1
             this.variants[this.selectedVariant].currentSale -= 1
         },
